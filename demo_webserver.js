@@ -5,6 +5,11 @@ var http = require("http"),
 	port = process.argv[2] || 3006;
 
 http.createServer(function(req, res){
+    if (path.normalize(decodeURI(url.parse(req.url).pathname)) !== decodeURI(url.parse(req.url).pathname)) {
+        res.statusCode = 403;
+        res.end();
+        return;
+    }
 	var uri = url.parse(req.url).pathname,
 		filename = path.join(process.cwd(), uri);
 
